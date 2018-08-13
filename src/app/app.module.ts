@@ -7,6 +7,7 @@ import {MaterialModule} from './material.config';
 import {HeaderComponent} from "./header/header.component";
 import {TransactionsComponent} from "./transactions/transactions.component";
 import {TransactionListComponent} from "./transactions/transaction-list/transaction-list.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {TransactionListComponent} from "./transactions/transaction-list/transact
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],
