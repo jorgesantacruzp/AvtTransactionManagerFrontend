@@ -1,17 +1,26 @@
 <div class="example-container">
-  <mat-form-field>
-    <input type="number" matInput placeholder="Weight" #weightInput>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Select type"
-                [(ngModel)]="selectedType"
-                [(value)]="selectedType">
-      <mat-option *ngFor="let type of types" [value]="type.id">
-        {{type.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <button mat-flat-button color="primary" (click)="onSearch(selectedType)">Search</button>
+  <div class="child">
+    <mat-form-field>
+      <input type="number" matInput placeholder="Weight" #weightInput>
+    </mat-form-field>
+  </div>
+  <div class="child">
+    <mat-form-field>
+      <mat-select placeholder="Select type"
+                  [(ngModel)]="selectedType"
+                  [(value)]="selectedType">
+        <mat-option *ngFor="let type of types" [value]="type.id">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="child">
+    <button mat-flat-button color="primary" (click)="onSearch(selectedType)">
+      Search
+    </button>
+  </div>
+</div>
+<div class="float-button">
+  <button class="addButton" mat-fab color="primary">+</button>
 </div>
