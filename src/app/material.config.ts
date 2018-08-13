@@ -1,19 +1,22 @@
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
 import {NgModule} from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatIconModule} from '@angular/material';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   imports: [
     MatButtonModule,
-    MatCheckboxModule,
+    MatIconModule,
+    MatTableModule,
     MatToolbarModule,
     MatInputModule,
     MatSelectModule],
   exports: [
     MatButtonModule,
-    MatCheckboxModule,
+    MatIconModule,
+    MatTableModule,
     MatToolbarModule,
     MatInputModule,
     MatSelectModule],
