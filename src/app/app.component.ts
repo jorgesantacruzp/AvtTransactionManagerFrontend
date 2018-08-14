@@ -1,11 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Transaction} from "./transactions/transaction.model";
-
-const ELEMENT_DATA: Transaction[] = [
-  {id: "1", name: 'Check chanege transaction sample', weight: 1, type: 'CHECK_CHANGE', createdDate: '2018/08/13'},
-  {id: "2", name: 'Money transfer transaction sample', weight: 4, type: 'MONEY_TRANSFER', createdDate: '2018/08/13'},
-  {id: "3", name: 'Payroll payment transaction sample', weight: 6, type: 'PAYROLL_PAYMENT', createdDate: '2018/08/13'}
-];
+import {TransactionsService} from "./transactions/transactions.service";
 
 @Component({
   selector: 'app-root',
@@ -14,11 +9,25 @@ const ELEMENT_DATA: Transaction[] = [
 })
 export class AppComponent implements OnInit {
 
-  ngOnInit(): void {
-    // get all transactions
+  ELEMENT_DATA: Transaction[];
+  dataSourceCheckChange: Transaction[];
+  dataSourceMoneyTransfer: Transaction[];
+  dataSourcePayrollPayment: Transaction[];
+
+  constructor(private transactionService: TransactionsService) {
   }
 
-  dataSourceCheckChange = ELEMENT_DATA.filter(t => t.type === 'CHECK_CHANGE');
-  dataSourceMoneyTransfer = ELEMENT_DATA.filter(t => t.type === 'MONEY_TRANSFER');
-  dataSourcePayrollPayment = ELEMENT_DATA.filter(t => t.type === 'PAYROLL_PAYMENT');
+  ngOnInit(): void {
+    this.updateTransactionsList();
+    this.transactionService.transactionsChanged.subscribe(
+      () => this.updateTransactionsList()
+    );
+  }
+
+  updateTransactionsList() {
+    this.ELEMENT_DATA = this.transactionService.getTransactions();
+    this.dataSourceCheckChange = this.ELEMENT_DATA.filter(t => t.type === 'CHECK_CHANGE');
+    this.dataSourceMoneyTransfer = this.ELEMENT_DATA.filter(t => t.type === 'MONEY_TRANSFER');
+    this.dataSourcePayrollPayment = this.ELEMENT_DATA.filter(t => t.type === 'PAYROLL_PAYMENT');
+  }
 }

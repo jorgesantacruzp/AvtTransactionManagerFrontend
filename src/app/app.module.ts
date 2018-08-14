@@ -8,6 +8,7 @@ import {TransactionsComponent} from "./transactions/transactions.component";
 import {TransactionListComponent} from "./transactions/transaction-list/transaction-list.component";
 import {TransactionSaveDialog} from "./transactions/transaction-save/transaction-save.component";
 import {FormsModule} from "@angular/forms";
+import {TransactionsService} from "./transactions/transactions.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {FormsModule} from "@angular/forms";
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [TransactionSaveDialog],
+  providers: [TransactionSaveDialog, TransactionsService],
   entryComponents: [TransactionSaveDialog],
   bootstrap: [AppComponent]
 })
