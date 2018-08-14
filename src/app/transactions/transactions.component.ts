@@ -22,7 +22,8 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.transactionsChanged.subscribe(
-      () => this.transactionCreated.emit();
+      () => this.transactionCreated.emit()
+    );
   }
 
   onSearch(selected: string) {

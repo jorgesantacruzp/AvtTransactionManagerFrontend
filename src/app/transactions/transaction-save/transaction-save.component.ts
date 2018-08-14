@@ -1,4 +1,4 @@
-import {Component, Inject, ViewChild, ElementRef, OnInit} from '@angular/core';
+import {Component, Inject, ViewChild, ElementRef} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {transactionTypes, dataStructures, TransactionType} from "../transaction-type.model";
 import {TransactionsService} from "../transactions.service";
@@ -14,7 +14,7 @@ export interface DialogData {
   templateUrl: './transaction-save.component.html',
   styleUrls: ['./transaction-save.component.css']
 })
-export class TransactionSaveDialog implements OnInit {
+export class TransactionSaveDialog {
   @ViewChild('nameInput') nameInputRef: ElementRef;
   @ViewChild('weightInput') weightInputRef: ElementRef;
   types: TransactionType[] = transactionTypes.filter(t => t.id !== "-1");
@@ -32,7 +32,7 @@ export class TransactionSaveDialog implements OnInit {
     this.emptyList = selectedType === "-1";
     const name = this.nameInputRef.nativeElement.value;
     const weight = this.weightInputRef.nativeElement.value;
-    const transaction = new Transaction(5, name, weight, selectedType, new Date(), selectedDs);
+    const transaction = new Transaction("5", name, weight, selectedType, "14/08/2018", selectedDs);
     this.transactionService.addTransaction(transaction);
     this.dialogRef.close();
   }

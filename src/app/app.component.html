@@ -4,18 +4,23 @@
 <app-transactions
   (transactionCreated)="updateTransactionsList()"></app-transactions>
 <div *ngIf="transactions.length > 0; else noTransactions">
-
   <div *ngIf="dataSourceCheckChange.length > 0">
     <h2>Check change transactions</h2>
-    <app-transaction-list [dataSourceInput]="dataSourceCheckChange"></app-transaction-list>
+    <app-transaction-list
+      (transactionDeleted)="updateTransactionsList()"
+      [dataSourceInput]="dataSourceCheckChange"></app-transaction-list>
   </div>
   <div *ngIf="dataSourceMoneyTransfer.length > 0">
     <h2>Money transfer transactions</h2>
-    <app-transaction-list [dataSourceInput]="dataSourceMoneyTransfer"></app-transaction-list>
+    <app-transaction-list
+      (transactionDeleted)="updateTransactionsList()"
+      [dataSourceInput]="dataSourceMoneyTransfer"></app-transaction-list>
   </div>
   <div *ngIf="dataSourcePayrollPayment.length > 0">
     <h2>Payroll payment transactions</h2>
-    <app-transaction-list [dataSourceInput]="dataSourcePayrollPayment"></app-transaction-list>
+    <app-transaction-list
+      (transactionDeleted)="updateTransactionsList()"
+      [dataSourceInput]="dataSourcePayrollPayment"></app-transaction-list>
   </div>
 </div>
 <ng-template #noTransactions>
