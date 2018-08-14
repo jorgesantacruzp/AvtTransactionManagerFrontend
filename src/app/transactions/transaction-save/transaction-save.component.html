@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>New transaction</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="Name" #nameInput>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="number" matInput placeholder="Weight" #weightInput>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Select type"
+                [(ngModel)]="selectedType"
+                [(value)]="selectedType">
+      <mat-option *ngFor="let type of types" [value]="type.id">
+        {{type.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="emptyList">
+    <mat-select placeholder="Select data structure"
+                [(ngModel)]="selectedDs"
+                [(value)]="selectedDs">
+      <mat-option *ngFor="let ds of dataStructures" [value]="ds">
+        {{ds}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="floatRight">
+  <button mat-flat-button color="primary"
+          (click)="onSaveButton(selectedType, selectedDs)">Save
+  </button>
+</div>

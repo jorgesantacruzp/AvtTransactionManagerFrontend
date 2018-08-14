@@ -10,3 +10,7 @@ export const transactionTypes: TransactionType[] = [
   {id: "2", name: 'Money transfer', code: 'MONEY_TRANSFER'},
   {id: "3", name: 'Payroll payment', code: 'PAYROLL_PAYMENT'}
 ];
+
+export const dataStructures: string[] = [
+  "BINARY_TREE", "QUEUE"
+];
