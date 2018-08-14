@@ -9,7 +9,7 @@ import {TransactionsService} from "./transactions/transactions.service";
 })
 export class AppComponent implements OnInit {
 
-  ELEMENT_DATA: Transaction[];
+  transactions: Transaction[];
   dataSourceCheckChange: Transaction[];
   dataSourceMoneyTransfer: Transaction[];
   dataSourcePayrollPayment: Transaction[];
@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
   }
 
   updateTransactionsList() {
-    this.ELEMENT_DATA = this.transactionService.getTransactions();
-    this.dataSourceCheckChange = this.ELEMENT_DATA.filter(t => t.type === 'CHECK_CHANGE');
-    this.dataSourceMoneyTransfer = this.ELEMENT_DATA.filter(t => t.type === 'MONEY_TRANSFER');
-    this.dataSourcePayrollPayment = this.ELEMENT_DATA.filter(t => t.type === 'PAYROLL_PAYMENT');
+    this.transactions = this.transactionService.getTransactions();
+    this.dataSourceCheckChange = this.transactions.filter(t => t.type === 'CHECK_CHANGE');
+    this.dataSourceMoneyTransfer = this.transactions.filter(t => t.type === 'MONEY_TRANSFER');
+    this.dataSourcePayrollPayment = this.transactions.filter(t => t.type === 'PAYROLL_PAYMENT');
   }
 }
