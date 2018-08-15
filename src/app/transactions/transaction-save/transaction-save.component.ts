@@ -1,5 +1,5 @@
-import {Component, Inject, ViewChild, ElementRef, Renderer2} from "@angular/core";
-import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar} from "@angular/material";
+import {Component, Inject, ViewChild, ElementRef, Renderer2, EventEmitter, Output} from "@angular/core";
+import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSelectChange} from "@angular/material";
 import {transactionTypes, dataStructures, TransactionType} from "../transaction-type.model";
 import {TransactionsService} from "../transactions.service";
 import {Transaction} from "../transaction.model";
@@ -18,11 +18,12 @@ export interface DialogData {
 export class TransactionSaveDialog {
   @ViewChild('nameInput') nameInputRef: ElementRef;
   @ViewChild('weightInput') weightInputRef: ElementRef;
+  @Output() selectionChange: EventEmitter<MatSelectChange>;
   types: TransactionType[] = transactionTypes.filter(t => t.id !== "-1");
   dataStructures: string[] = dataStructures;
   selectedType: string = 'CHECK_CHANGE';
   selectedDs: string = dataStructures[0];
-  emptyList: boolean = false;
+  emptyList: boolean = this.isSelectedTransactionTypeListEmpty(this.selectedType);
 
   nameForm = new FormControl('', [Validators.required]);
   weightForm = new FormControl('', [Validators.required]);
@@ -35,7 +36,6 @@ export class TransactionSaveDialog {
   }
 
   onSaveButton(selectedType: string, selectedDs: string): void {
-    this.emptyList = selectedType === "CHECK_CHANGE";
     const name = this.nameInputRef.nativeElement.value;
     const weight = this.weightInputRef.nativeElement.value;
     const transaction = new Transaction("5", name, weight, selectedType, "14/08/2018", selectedDs);
@@ -70,5 +70,13 @@ export class TransactionSaveDialog {
 
   getWeightErrorMessage() {
     return this.weightForm.hasError('required') ? 'You must enter a weight' : '';
+  }
+
+  showDataStructureSelect(matSelectChange: MatSelectChange) {
+    this.emptyList = this.isSelectedTransactionTypeListEmpty(matSelectChange.value);
+  }
+
+  private isSelectedTransactionTypeListEmpty(selectedType: string) {
+    return this.transactionService.getTransactions().filter(t => t.type === selectedType).length === 0;
   }
 }

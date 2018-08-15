@@ -11,7 +11,8 @@
   <mat-form-field>
     <mat-select placeholder="Select type"
                 [(ngModel)]="selectedType"
-                [(value)]="selectedType">
+                [(value)]="selectedType"
+                (selectionChange)="showDataStructureSelect($event)">
       <mat-option *ngFor="let type of types" [value]="type.code">
         {{type.name}}
       </mat-option>
