@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Transaction} from "./transactions/transaction.model";
 import {TransactionsService} from "./transactions/transactions.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   dataSourceMoneyTransfer: Transaction[];
   dataSourcePayrollPayment: Transaction[];
 
-  constructor(private transactionService: TransactionsService) {
+  constructor(private transactionService: TransactionsService,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -30,4 +32,11 @@ export class AppComponent implements OnInit {
     this.dataSourceMoneyTransfer = this.transactions.filter(t => t.type === 'MONEY_TRANSFER');
     this.dataSourcePayrollPayment = this.transactions.filter(t => t.type === 'PAYROLL_PAYMENT');
   }
+
+  changeRepository(repository: string) {
+    this.snackBar.open('Repository was changed to ' + repository, '', {
+      duration: 2000,
+    });
+  }
+
 }
