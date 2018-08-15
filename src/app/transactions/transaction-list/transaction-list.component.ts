@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {Transaction} from "../transaction.model";
 import {TransactionsService} from "../transactions.service";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-transaction-list',
@@ -12,7 +13,8 @@ export class TransactionListComponent implements OnInit {
   @Input('dataSourceInput') dataSource: Transaction[];
   @Output() transactionDeleted = new EventEmitter<void>();
 
-  constructor(private transactionService: TransactionsService) {
+  constructor(private transactionService: TransactionsService,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -23,5 +25,8 @@ export class TransactionListComponent implements OnInit {
 
   deleteTransaction(id: string) {
     this.transactionService.deleteTransaction(id);
+    this.snackBar.open('Transaction deleted', '', {
+      duration: 2000,
+    });
   }
 }

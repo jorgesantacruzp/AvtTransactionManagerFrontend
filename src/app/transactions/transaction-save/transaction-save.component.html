@@ -1,10 +1,12 @@
 <h1 mat-dialog-title>New transaction</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput placeholder="Name" #nameInput>
+    <input id="name" matInput placeholder="Name" #nameInput [formControl]="nameForm" required>
+    <mat-error *ngIf="nameForm.invalid">{{getNameErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input type="number" matInput placeholder="Weight" #weightInput>
+    <input id="weight" type="number" matInput placeholder="Weight" #weightInput [formControl]="weightForm" required>
+    <mat-error *ngIf="weightForm.invalid">{{getWeightErrorMessage()}}</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Select type"

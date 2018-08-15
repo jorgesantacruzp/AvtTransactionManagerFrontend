@@ -7,7 +7,7 @@ import {HeaderComponent} from "./header/header.component";
 import {TransactionsComponent} from "./transactions/transactions.component";
 import {TransactionListComponent} from "./transactions/transaction-list/transaction-list.component";
 import {TransactionSaveDialog} from "./transactions/transaction-save/transaction-save.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TransactionsService} from "./transactions/transactions.service";
 
 @NgModule({
@@ -21,6 +21,7 @@ import {TransactionsService} from "./transactions/transactions.service";
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],
