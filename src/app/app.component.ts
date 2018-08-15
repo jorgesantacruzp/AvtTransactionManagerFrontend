@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {Transaction} from "./transactions/transaction.model";
 import {TransactionsService} from "./transactions/transactions.service";
 import {MatSnackBar} from "@angular/material";
@@ -47,6 +47,12 @@ export class AppComponent implements OnInit {
     this.snackBar.open('Repository was changed to ' + repository, '', {
       duration: 2000,
     });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event) {
+    // clean data structures in memory
+    console.log("BYE 2");
   }
 
 }
