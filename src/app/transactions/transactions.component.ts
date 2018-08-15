@@ -3,6 +3,7 @@ import {transactionTypes, TransactionType} from "./transaction-type.model";
 import {MatDialog} from "@angular/material";
 import {TransactionSaveDialog} from "./transaction-save/transaction-save.component";
 import {TransactionsService} from "./transactions.service";
+import {Transaction} from "./transaction.model";
 
 @Component({
   selector: 'app-transactions',
@@ -11,6 +12,7 @@ import {TransactionsService} from "./transactions.service";
 })
 export class TransactionsComponent implements OnInit {
   @Output() transactionCreated = new EventEmitter<void>();
+  @Output() transactionFiltered = new EventEmitter<Transaction[]>();
   @ViewChild('weightInput') weightInputRef: ElementRef;
 
   types: TransactionType[] = transactionTypes;
@@ -24,12 +26,14 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.transactionsChanged.subscribe(
       () => this.transactionCreated.emit()
     );
+    this.transactionService.transactionsFiltered.subscribe(
+      (transactions: Transaction[]) => this.transactionFiltered.emit(transactions)
+    );
   }
 
   onSearch(selected: string) {
     const weight = this.weightInputRef.nativeElement.value;
-    alert(weight + " - " + selected);
-    // get transactions by weight and type
+    this.transactionService.getTransactionsByWeightAndType(weight, selected);
   }
 
   openDialog(): void {

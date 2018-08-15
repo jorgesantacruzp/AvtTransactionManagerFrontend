@@ -54,6 +54,9 @@ export class TransactionSaveDialog {
       setTimeout(() => weightElement.focus(), 0);
     } else {
       this.transactionService.addTransaction(transaction);
+      const weight = this.transactionService.searchedWeight;
+      const typeId = this.transactionService.searchedType;
+      this.transactionService.getTransactionsByWeightAndType(weight, typeId);
       this.dialogRef.close();
       this.snackBar.open('Transaction saved', '', {
         duration: 2000,

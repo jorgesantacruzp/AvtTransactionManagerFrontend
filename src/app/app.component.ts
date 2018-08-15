@@ -11,9 +11,11 @@ import {MatSnackBar} from "@angular/material";
 export class AppComponent implements OnInit {
 
   transactions: Transaction[];
+  filteredTransactions: Transaction[] = [];
   dataSourceCheckChange: Transaction[];
   dataSourceMoneyTransfer: Transaction[];
   dataSourcePayrollPayment: Transaction[];
+  noTransactionsFound: boolean = false;
 
   constructor(private transactionService: TransactionsService,
               public snackBar: MatSnackBar) {
@@ -31,6 +33,14 @@ export class AppComponent implements OnInit {
     this.dataSourceCheckChange = this.transactions.filter(t => t.type === 'CHECK_CHANGE');
     this.dataSourceMoneyTransfer = this.transactions.filter(t => t.type === 'MONEY_TRANSFER');
     this.dataSourcePayrollPayment = this.transactions.filter(t => t.type === 'PAYROLL_PAYMENT');
+  }
+
+  filterTransactions(transactions: Transaction[]) {
+    this.noTransactionsFound = transactions.length === 0 && this.transactions.length > 0;
+    this.filteredTransactions = transactions;
+    this.dataSourceCheckChange = this.filteredTransactions.filter(t => t.type === 'CHECK_CHANGE');
+    this.dataSourceMoneyTransfer = this.filteredTransactions.filter(t => t.type === 'MONEY_TRANSFER');
+    this.dataSourcePayrollPayment = this.filteredTransactions.filter(t => t.type === 'PAYROLL_PAYMENT');
   }
 
   changeRepository(repository: string) {

@@ -2,34 +2,41 @@
 <br>
 <br>
 <app-transactions
-  (transactionCreated)="updateTransactionsList()"></app-transactions>
-<div *ngIf="transactions.length > 0; else noTransactions">
+  (transactionCreated)="updateTransactionsList()"
+  (transactionFiltered)="filterTransactions($event)"></app-transactions>
+<div *ngIf="filteredTransactions.length > 0">
   <div *ngIf="dataSourceCheckChange.length > 0">
     <h2 class="marginLeft10">Check change transactions</h2>
     <app-transaction-list
       (transactionDeleted)="updateTransactionsList()"
+      (transactionFiltered)="filterTransactions($event)"
       [dataSourceInput]="dataSourceCheckChange"></app-transaction-list>
   </div>
   <div *ngIf="dataSourceMoneyTransfer.length > 0">
     <h2 class="marginLeft10">Money transfer transactions</h2>
     <app-transaction-list
       (transactionDeleted)="updateTransactionsList()"
+      (transactionFiltered)="filterTransactions($event)"
       [dataSourceInput]="dataSourceMoneyTransfer"></app-transaction-list>
   </div>
   <div *ngIf="dataSourcePayrollPayment.length > 0">
     <h2 class="marginLeft10">Payroll payment transactions</h2>
     <app-transaction-list
       (transactionDeleted)="updateTransactionsList()"
+      (transactionFiltered)="filterTransactions($event)"
       [dataSourceInput]="dataSourcePayrollPayment"></app-transaction-list>
   </div>
 </div>
-<ng-template #noTransactions>
-  <div class="alignCenter">
-    <h1>
-      No pending transactions.
-    </h1>
-    <p>Select the repository of your preference</p>
-    <img class="iconStyle" src="../assets/img/mongo.ico" (click)="changeRepository('MONGODB')">
-    <img class="iconStyle" src="../assets/img/mysql.ico" (click)="changeRepository('MYSQL')">
-  </div>
-</ng-template>
+<div class="alignCenter" *ngIf="transactions.length === 0">
+  <h1>
+    No pending transactions.
+  </h1>
+  <p>Select the repository of your preference</p>
+  <img class="iconStyle" src="../assets/img/mongo.ico" (click)="changeRepository('MONGODB')">
+  <img class="iconStyle" src="../assets/img/mysql.ico" (click)="changeRepository('MYSQL')">
+</div>
+<div class="alignCenter" *ngIf="noTransactionsFound">
+  <h1>
+    No transactions for this search.
+  </h1>
+</div>
