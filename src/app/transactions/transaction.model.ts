@@ -16,11 +16,4 @@ export class Transaction {
     this.dataStructure = dataStructure;
   }
 
-  constructor(name: string,
-              weight: number,
-              type: string) {
-    this.name = name;
-    this.weight = weight;
-    this.type = type;
-  }
 }

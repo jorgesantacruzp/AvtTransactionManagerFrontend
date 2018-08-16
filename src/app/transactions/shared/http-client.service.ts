@@ -41,7 +41,7 @@ export class HttpClientService {
   }
 
   changeRepository(repository: string) {
-    return this.http.post('http://localhost:8080/v1/repositories/' + repository);
+    return this.http.post('http://localhost:8080/v1/repositories/' + repository, {});
   }
 
   deleteTransactionsInMemory() {

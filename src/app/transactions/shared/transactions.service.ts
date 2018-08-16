@@ -22,7 +22,7 @@ export class TransactionsService {
     this.httpClientService.getTransactions(weight, typeId)
       .subscribe(
         (transactions: any[]) => {
-          if (weight == '' && typeId == "-1") {
+          if (!(weight > 0) && typeId == "-1") {
             this.allTransactions = transactions;
           }
           this.transactions = transactions;

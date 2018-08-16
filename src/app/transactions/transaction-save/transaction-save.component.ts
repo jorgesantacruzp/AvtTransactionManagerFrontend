@@ -44,7 +44,7 @@ export class TransactionSaveDialog {
     if (this.emptyList) {
       transaction = new Transaction(name, weight, selectedType, selectedDs);
     } else {
-      transaction = new Transaction(name, weight, selectedType);
+      transaction = new Transaction(name, weight, selectedType, null);
     }
 
     const weightElement = this.renderer.selectRootElement('#weight');
