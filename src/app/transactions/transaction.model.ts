@@ -6,17 +6,21 @@ export class Transaction {
   public createdDate: string;
   public dataStructure: string;
 
-  constructor(id: string,
-              name: string,
+  constructor(name: string,
               weight: number,
               type: string,
-              createdDate: string,
               dataStructure: string) {
-    this.id = id;
     this.name = name;
     this.weight = weight;
     this.type = type;
-    this.createdDate = createdDate;
     this.dataStructure = dataStructure;
+  }
+
+  constructor(name: string,
+              weight: number,
+              type: string) {
+    this.name = name;
+    this.weight = weight;
+    this.type = type;
   }
 }

@@ -2,6 +2,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {Transaction} from "../transaction.model";
 import {TransactionsService} from "../shared/transactions.service";
 import {MatSnackBar} from "@angular/material";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-transaction-list',
@@ -19,21 +20,31 @@ export class TransactionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionService.transactionsChanged.subscribe(
-      () => this.transactionDeleted.emit()
-    );
     this.transactionService.transactionsFiltered.subscribe(
       (transactions: Transaction[]) => this.transactionFiltered.emit(transactions)
     );
   }
 
   deleteTransaction(id: string) {
-    this.transactionService.deleteTransaction(id);
-    const weight = this.transactionService.searchedWeight;
-    const typeId = this.transactionService.searchedType;
-    this.transactionService.getTransactionsByWeightAndType(weight, typeId);
-    this.snackBar.open('Transaction deleted', '', {
-      duration: 2000,
-    });
+    this.transactionService.deleteTransaction(id)
+      .subscribe(
+        () => {
+          this.transactionService.transactions = this.transactionService.transactions.filter(t => t.id !== id);
+          this.transactionService.allTransactions = this.transactionService.allTransactions.filter(t => t.id !== id);
+          if (!(this.transactionService.searchedWeight > 0 || this.transactionService.searchedType !== "-1")
+            || this.transactionService.transactions.length === 0) {
+            this.transactionDeleted.emit()
+          }
+          const weight = this.transactionService.searchedWeight;
+          const typeId = this.transactionService.searchedType;
+          this.transactionService.getTransactionsByWeightAndTypeFromServer(weight, typeId);
+          this.snackBar.open('Transaction deleted', '', {
+            duration: 2000,
+          });
+        },
+        (error: HttpErrorResponse) => {
+          this.snackBar.open(error.error.message, '', {duration: 2000})
+        }
+      );
   }
 }

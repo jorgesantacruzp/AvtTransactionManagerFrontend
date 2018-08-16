@@ -27,7 +27,7 @@
       [dataSourceInput]="dataSourcePayrollPayment"></app-transaction-list>
   </div>
 </div>
-<div class="alignCenter" *ngIf="transactions.length === 0">
+<div class="alignCenter" *ngIf="showRepositoryChoiceSection()">
   <h1>
     No pending transactions.
   </h1>

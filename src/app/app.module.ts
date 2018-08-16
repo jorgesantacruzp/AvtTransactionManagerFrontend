@@ -9,6 +9,8 @@ import {TransactionListComponent} from "./transactions/transaction-list/transact
 import {TransactionSaveDialog} from "./transactions/transaction-save/transaction-save.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TransactionsService} from "./transactions/shared/transactions.service";
+import {HttpClientModule} from '@angular/common/http';
+import {HttpClientService} from "./transactions/shared/http-client.service";
 
 @NgModule({
   declarations: [
@@ -21,11 +23,12 @@ import {TransactionsService} from "./transactions/shared/transactions.service";
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [TransactionSaveDialog, TransactionsService],
+  providers: [TransactionSaveDialog, TransactionsService, HttpClientService],
   entryComponents: [TransactionSaveDialog],
   bootstrap: [AppComponent]
 })

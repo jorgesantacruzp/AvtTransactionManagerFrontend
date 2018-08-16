@@ -10,33 +10,44 @@ import {MatSnackBar} from "@angular/material";
 })
 export class AppComponent implements OnInit {
 
-  transactions: Transaction[];
+  transactions: Transaction[] = [];
+
+  ngOnInit(): void {
+    this.updateTransactionsList(true);
+    this.transactionService.transactionsChanged.subscribe(
+      () => this.updateTransactionsList(false)
+    );
+    this.transactionService.errorHappened.subscribe(
+      (errorMessage: string) => {
+        this.snackBar.open(errorMessage, '', {duration: 2000})
+      }
+    );
+  }
+
   filteredTransactions: Transaction[] = [];
   dataSourceCheckChange: Transaction[];
   dataSourceMoneyTransfer: Transaction[];
   dataSourcePayrollPayment: Transaction[];
+
   noTransactionsFound: boolean = false;
 
   constructor(private transactionService: TransactionsService,
               public snackBar: MatSnackBar) {
   }
 
-  ngOnInit(): void {
-    this.updateTransactionsList();
-    this.transactionService.transactionsChanged.subscribe(
-      () => this.updateTransactionsList()
-    );
-  }
-
-  updateTransactionsList() {
-    this.transactions = this.transactionService.getTransactions();
+  updateTransactionsList(isFirstTime: boolean) {
+    if (isFirstTime) {
+      this.transactionService.getTransactionsFromServer(0, "-1");
+    } else {
+      this.transactions = this.transactionService.getTransactions();
+    }
     this.dataSourceCheckChange = this.transactions.filter(t => t.type === 'CHECK_CHANGE');
     this.dataSourceMoneyTransfer = this.transactions.filter(t => t.type === 'MONEY_TRANSFER');
     this.dataSourcePayrollPayment = this.transactions.filter(t => t.type === 'PAYROLL_PAYMENT');
   }
 
   filterTransactions(transactions: Transaction[]) {
-    this.noTransactionsFound = transactions.length === 0 && this.transactions.length > 0;
+    this.noTransactionsFound = transactions.length === 0 && this.transactionService.allTransactions.length > 0;
     this.filteredTransactions = transactions;
     this.dataSourceCheckChange = this.filteredTransactions.filter(t => t.type === 'CHECK_CHANGE');
     this.dataSourceMoneyTransfer = this.filteredTransactions.filter(t => t.type === 'MONEY_TRANSFER');
@@ -47,6 +58,10 @@ export class AppComponent implements OnInit {
     this.snackBar.open('Repository was changed to ' + repository, '', {
       duration: 2000,
     });
+  }
+
+  showRepositoryChoiceSection() {
+    return this.transactionService.allTransactions.length == 0;
   }
 
   @HostListener('window:beforeunload', ['$event'])

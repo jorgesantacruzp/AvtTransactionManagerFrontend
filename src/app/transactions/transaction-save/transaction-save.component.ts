@@ -4,6 +4,7 @@ import {transactionTypes, dataStructures, TransactionType} from "../transaction-
 import {TransactionsService} from "../shared/transactions.service";
 import {Transaction} from "../transaction.model";
 import {FormControl, Validators} from "@angular/forms";
+import {HttpErrorResponse} from "@angular/common/http";
 
 export interface DialogData {
   animal: string;
@@ -38,7 +39,13 @@ export class TransactionSaveDialog {
   onSaveButton(selectedType: string, selectedDs: string): void {
     const name = this.nameInputRef.nativeElement.value;
     const weight = this.weightInputRef.nativeElement.value;
-    const transaction = new Transaction("5", name, weight, selectedType, "14/08/2018", selectedDs);
+
+    let transaction: Transaction;
+    if (this.emptyList) {
+      transaction = new Transaction(name, weight, selectedType, selectedDs);
+    } else {
+      transaction = new Transaction(name, weight, selectedType);
+    }
 
     const weightElement = this.renderer.selectRootElement('#weight');
     const nameElement = this.renderer.selectRootElement('#name');
@@ -53,14 +60,27 @@ export class TransactionSaveDialog {
       setTimeout(() => nameElement.focus(), 0);
       setTimeout(() => weightElement.focus(), 0);
     } else {
-      this.transactionService.addTransaction(transaction);
-      const weight = this.transactionService.searchedWeight;
-      const typeId = this.transactionService.searchedType;
-      this.transactionService.getTransactionsByWeightAndType(weight, typeId);
-      this.dialogRef.close();
-      this.snackBar.open('Transaction saved', '', {
-        duration: 2000,
-      });
+      this.transactionService.addTransaction(transaction)
+        .subscribe(
+          () => {
+            const weight = this.transactionService.searchedWeight;
+            const typeId = this.transactionService.searchedType;
+            this.transactionService.getTransactionsByWeightAndTypeFromServer(weight, typeId);
+            this.dialogRef.close();
+            this.snackBar.open('Transaction saved', '', {
+              duration: 2000,
+            });
+            this.transactionService.transactions.push(transaction);
+            this.transactionService.allTransactions.push(transaction);
+            if (!(this.transactionService.searchedWeight > 0 || this.transactionService.searchedType !== "-1")
+              || this.transactionService.transactions.length === 1) {
+              this.transactionService.transactionsChanged.emit();
+            }
+          },
+          (error: HttpErrorResponse) => {
+            this.snackBar.open(error.error.message, '', {duration: 2000})
+          }
+        );
     }
   }
 

@@ -34,7 +34,7 @@ export class TransactionsComponent implements OnInit {
 
   onSearch(selected: string) {
     const weight = this.weightInputRef.nativeElement.value;
-    this.transactionService.getTransactionsByWeightAndType(weight, selected);
+    this.transactionService.getTransactionsByWeightAndTypeFromServer(weight, selected);
   }
 
   openDialog(): void {
