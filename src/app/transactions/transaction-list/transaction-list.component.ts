@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
 import {Transaction} from "../transaction.model";
-import {TransactionsService} from "../transactions.service";
+import {TransactionsService} from "../shared/transactions.service";
 import {MatSnackBar} from "@angular/material";
 
 @Component({

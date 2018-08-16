@@ -1,6 +1,6 @@
-import {Transaction} from "./transaction.model";
+import {Transaction} from "../transaction.model";
 import {EventEmitter} from "@angular/core";
-import {transactionTypes} from "./transaction-type.model";
+import {transactionTypes} from "../transaction-type.model";
 
 export class TransactionsService {
   transactionsChanged = new EventEmitter<void>();
@@ -19,13 +19,15 @@ export class TransactionsService {
     this.searchedType = typeId;
     const transaction = transactionTypes.filter(type => type.id === typeId)[0];
     const code = transaction != undefined ? transaction.code : 'ALL';
-    let transactions: Transaction[] = this.getTransactions();
+    let transactions: Transaction[];
     if (weight > 0 && typeId !== "-1") {
       transactions = this.transactions.slice().filter(t => (t.weight === weight && t.type === code));
     } else if (weight > 0) {
       transactions = this.transactions.slice().filter(t => t.weight === weight);
     } else if (typeId !== "-1") {
       transactions = this.transactions.slice().filter(t => t.type === code);
+    } else {
+      transactions = this.getTransactions();
     }
     this.transactionsFiltered.emit(transactions);
   }

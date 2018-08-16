@@ -1,6 +1,6 @@
 import {Component, OnInit, HostListener} from '@angular/core';
 import {Transaction} from "./transactions/transaction.model";
-import {TransactionsService} from "./transactions/transactions.service";
+import {TransactionsService} from "./transactions/shared/transactions.service";
 import {MatSnackBar} from "@angular/material";
 
 @Component({

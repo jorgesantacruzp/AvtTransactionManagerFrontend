@@ -1,7 +1,7 @@
 import {Component, Inject, ViewChild, ElementRef, Renderer2, EventEmitter, Output} from "@angular/core";
 import {MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSelectChange} from "@angular/material";
 import {transactionTypes, dataStructures, TransactionType} from "../transaction-type.model";
-import {TransactionsService} from "../transactions.service";
+import {TransactionsService} from "../shared/transactions.service";
 import {Transaction} from "../transaction.model";
 import {FormControl, Validators} from "@angular/forms";
 

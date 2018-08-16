@@ -2,7 +2,7 @@ import {Component, ViewChild, ElementRef, OnInit, EventEmitter, Output} from '@a
 import {transactionTypes, TransactionType} from "./transaction-type.model";
 import {MatDialog} from "@angular/material";
 import {TransactionSaveDialog} from "./transaction-save/transaction-save.component";
-import {TransactionsService} from "./transactions.service";
+import {TransactionsService} from "./shared/transactions.service";
 import {Transaction} from "./transaction.model";
 
 @Component({
