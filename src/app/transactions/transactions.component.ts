@@ -17,6 +17,7 @@ export class TransactionsComponent implements OnInit {
 
   types: TransactionType[] = transactionTypes;
   selectedType: string = '-1';
+  dialogRef;
 
   constructor(public dialog: MatDialog,
               private transactionService: TransactionsService) {
@@ -37,12 +38,14 @@ export class TransactionsComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TransactionSaveDialog, {
-      width: '250px'
-    });
+    if (this.dialogRef == null) {
+      this.dialogRef = this.dialog.open(TransactionSaveDialog, {
+        width: '250px'
+      });
+    }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef = null;
     });
   }
 }
