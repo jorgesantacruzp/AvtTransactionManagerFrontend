@@ -58,13 +58,14 @@ export class AppComponent implements OnInit {
   changeRepository(repository: string) {
     this.transactionService.changeRepository(repository)
       .subscribe(
+        () => {
+          this.snackBar.open('Repository was changed to ' + repository, '', {duration: 2000,});
+        },
         (error: HttpErrorResponse) => {
-          console.log(error);
+          const message = error.error.message != null ? error.error.message : 'Problems while changing repository';
+          this.snackBar.open(message, '', {duration: 2000,});
         }
       );
-    this.snackBar.open('Repository was changed to ' + repository, '', {
-      duration: 2000,
-    });
   }
 
   showRepositoryChoiceSection() {

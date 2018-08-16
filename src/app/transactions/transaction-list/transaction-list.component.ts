@@ -43,7 +43,8 @@ export class TransactionListComponent implements OnInit {
           });
         },
         (error: HttpErrorResponse) => {
-          this.snackBar.open(error.error.message, '', {duration: 2000})
+          const message = error.error.message != null ? error.error.message : 'Problems while saving transactions';
+          this.snackBar.open(message, '', {duration: 2000})
         }
       );
   }

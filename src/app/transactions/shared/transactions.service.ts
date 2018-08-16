@@ -30,7 +30,7 @@ export class TransactionsService {
           this.transactionsChanged.emit();
         },
         (error: HttpErrorResponse) => {
-          this.errorHappened.emit(error.error.message);
+          this.errorHappened.emit(error.error.message != null ? error.error.message : 'Problems while fetching transactions');
         }
       );
   }
