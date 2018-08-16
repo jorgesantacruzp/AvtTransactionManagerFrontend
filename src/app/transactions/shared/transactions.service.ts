@@ -1,6 +1,5 @@
 import {Transaction} from "../transaction.model";
 import {EventEmitter, Injectable} from "@angular/core";
-import {transactionTypes} from "../transaction-type.model";
 import {HttpClientService} from "./http-client.service";
 import {HttpErrorResponse} from "@angular/common/http";
 
@@ -54,4 +53,7 @@ export class TransactionsService {
     return this.httpClientService.deleteTransaction(id);
   }
 
+  changeRepository(repository: string) {
+    return this.httpClientService.changeRepository(repository);
+  }
 }

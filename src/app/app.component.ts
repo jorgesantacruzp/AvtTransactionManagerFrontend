@@ -2,6 +2,7 @@ import {Component, OnInit, HostListener} from '@angular/core';
 import {Transaction} from "./transactions/transaction.model";
 import {TransactionsService} from "./transactions/shared/transactions.service";
 import {MatSnackBar} from "@angular/material";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -55,6 +56,12 @@ export class AppComponent implements OnInit {
   }
 
   changeRepository(repository: string) {
+    this.transactionService.changeRepository(repository)
+      .subscribe(
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
     this.snackBar.open('Repository was changed to ' + repository, '', {
       duration: 2000,
     });
