@@ -56,4 +56,8 @@ export class TransactionsService {
   changeRepository(repository: string) {
     return this.httpClientService.changeRepository(repository);
   }
+
+  deleteTransactionsInMemory() {
+    return this.httpClientService.deleteTransactionsInMemory();
+  }
 }

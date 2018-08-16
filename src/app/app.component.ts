@@ -71,10 +71,26 @@ export class AppComponent implements OnInit {
     return this.transactionService.allTransactions.length == 0;
   }
 
+  @HostListener('window:unload', ['$event'])
+  unloadHander(event) {
+    // clean data structures in memory
+    this.transactionService.deleteTransactionsInMemory()
+      .subscribe(
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
     // clean data structures in memory
-    console.log("BYE 2");
+    this.transactionService.deleteTransactionsInMemory()
+      .subscribe(
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
   }
 
 }
